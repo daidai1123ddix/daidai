@@ -26,7 +26,7 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:#E9E4DA;font-family:var(--font-sans);color:var(--ink)}
   #app{
-    position:relative;width:100%;max-width:430px;min-height:100vh;margin:0 auto;
+    position:relative;width:100%;max-width:430px;height:100vh;height:100dvh;margin:0 auto;
     background:var(--bg);display:flex;flex-direction:column;overflow:hidden;
     box-shadow:0 0 40px rgba(0,0,0,.12);
   }
@@ -121,6 +121,7 @@
   .imgbox{height:72px;background:#F7F4EE;border-radius:10px;display:flex;align-items:center;justify-content:center;
     color:var(--muted);font-size:13px;overflow:hidden;position:relative}
   .imgbox img{width:100%;height:100%;object-fit:cover}
+  .imgbox video{width:100%;height:100%;object-fit:cover;background:#000}
   .btn-save{height:52px;border:none;border-radius:12px;background:var(--gold);color:#fff;font-size:16px;font-weight:600;
     font-family:inherit;margin-top:4px}
   .btn-del{height:48px;border:none;border-radius:12px;background:transparent;color:#B5664A;font-size:14px;font-family:inherit}
@@ -130,6 +131,7 @@
   .thumb{flex:0 0 56px;width:56px;height:56px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;
     color:#fff;font-family:var(--font-serif);font-size:20px;font-weight:700;background:linear-gradient(135deg,#E9D9B8,#C28A2C)}
   .thumb img{width:100%;height:100%;object-fit:cover}
+  .thumb video{width:100%;height:100%;object-fit:cover}
   .res-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
   .res-title{font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .res-meta{font-size:13px;color:var(--muted)}
@@ -162,6 +164,7 @@
   .hero{margin:4px 20px 14px;height:200px;border-radius:var(--r-card);overflow:hidden;
     background:linear-gradient(135deg,#E9D9B8,#C28A2B)}
   .hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
   .d-body{padding:0 20px}
   .badge{display:inline-block;font-size:12px;font-weight:500;color:var(--gold);background:var(--gold-soft);
     padding:6px 12px;border-radius:14px;margin-bottom:10px}
@@ -258,6 +261,8 @@
   .globe-markers{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
   .globe-marker{position:absolute;width:15px;height:15px;margin:-7.5px 0 0 -7.5px;border-radius:50%;background:#C28A2B;border:2px solid #fff;box-shadow:0 0 9px rgba(194,138,43,.95);cursor:pointer;z-index:4;pointer-events:auto;transition:transform .12s}
   .globe-marker:active{transform:scale(1.3)}
+  .globe-marker.fp{background:#3FA7A0;border-color:#fff;box-shadow:0 0 9px rgba(63,167,160,.95)}
+  .place-item.fp .place-pin{background:#3FA7A0;box-shadow:0 0 6px rgba(63,167,160,.7)}
   .zoom-ctl{position:absolute;right:4px;bottom:6px;display:flex;flex-direction:column;gap:8px;z-index:5}
   .zoom-ctl button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
     background:rgba(10,14,30,.55);color:#F3EEE6;font-size:20px;line-height:1;backdrop-filter:blur(4px);cursor:pointer}
@@ -290,6 +295,36 @@
     #view-resume{display:block!important}
     .paper{box-shadow:none;margin:0}
   }
+
+  /* 我的：可编辑 + 二维码 */
+  .pavatar{cursor:pointer;overflow:hidden}
+  .pavatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .profile-head .p-name{font-size:18px;font-weight:700;outline:none;border-radius:6px;min-height:22px}
+  .profile-head .p-sub{font-size:13px;color:var(--muted);outline:none;border-radius:6px;min-height:18px}
+  .profile-head .p-name:focus,.profile-head .p-sub:focus{box-shadow:0 0 0 2px var(--gold-soft)}
+  .p-edit-hint{font-size:11px;color:var(--muted);padding:0 20px 10px}
+  .qr-box{margin:4px 20px 16px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;display:flex;align-items:center;gap:14px}
+  .qr-box img{width:92px;height:92px;border-radius:10px;background:#fff;flex:0 0 92px}
+  .qr-box .qr-t{font-size:13px;font-weight:600;color:var(--ink)}
+  .qr-box .qr-d{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
+
+  /* 简历：编辑滑块 + 证件照 */
+  .share-banner{margin:0 20px 10px;background:var(--gold-soft);color:var(--gold);font-size:12px;font-weight:600;text-align:center;padding:8px;border-radius:10px;display:none}
+  .res-editbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 20px 12px}
+  .res-editbar .hint{font-size:12px;color:var(--muted);flex:1}
+  .res-editbar .reset{font-size:12px;color:#B5664A;border:none;background:transparent;font-family:inherit;display:none}
+  .res-editbar .reset.show{display:block}
+  .slider{position:relative;width:104px;height:32px;background:#ECE6DB;border-radius:18px;cursor:pointer;user-select:none;flex:0 0 104px;overflow:hidden;touch-action:none}
+  .slider .knob{position:absolute;top:3px;height:26px;width:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;transition:left .18s,background .18s}
+  .slider:not(.on) .knob{left:49px;background:#B9B1A4}
+  .slider.on .knob{left:3px;background:var(--gold)}
+  .paper.editing .doc-name,.paper.editing .doc-sub,.paper.editing .doc-contact,.paper.editing .sec,.paper.editing .line{outline:1px dashed rgba(194,138,43,.5);border-radius:4px;outline-offset:2px}
+  .paper.editing .doc-name:focus,.paper.editing .doc-sub:focus,.paper.editing .doc-contact:focus,.paper.editing .sec:focus,.paper.editing .line:focus{outline-color:var(--gold);background:rgba(245,232,209,.5)}
+  .paper .doc-head{display:flex;gap:12px;align-items:flex-start}
+  .paper .doc-head .doc-meta{flex:1;min-width:0}
+  .paper .photo{width:64px;height:88px;flex:0 0 64px;border-radius:8px;overflow:hidden;background:#F0EBE2;border:1px dashed #CFC7BA;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;text-align:center;line-height:1.3}
+  .paper .photo img{width:100%;height:100%;object-fit:cover}
+  .paper .photo.editable{cursor:pointer}
 </style>
 </head>
 <body>
@@ -338,20 +373,39 @@
       <div class="screen">
         <div class="nav2">
           <button class="nav-btn" data-back><svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="#26241F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="nav-title" id="dayTitle">添加成就</div>
-          <div style="width:24px"></div>
-        </div>
-        <div class="catrow" id="dayCats"></div>
-        <div class="formcard">
+        <div class="nav-title" id="dayTitle">添加成就</div>
+        <div style="width:24px"></div>
+      </div>
+      <div class="formcard">
           <div class="form-title" id="addTitle">添加成就</div>
-          <div class="field"><label>标题</label><input type="text" id="f-title" placeholder="如：国家奖学金" /></div>
-          <div class="field"><label>日期</label><input type="date" id="f-date" /></div>
-          <div class="field"><label>描述</label><textarea id="f-desc" placeholder="记录这份成就背后的故事…"></textarea></div>
-          <div class="field"><label>图片（可选）</label><div class="imgbox" id="imgPick"><span id="imgHint">点击添加图片</span><input type="file" id="f-img" accept="image/*" style="display:none" /></div></div>
-          <div class="field"><label>分类</label><div class="minicat" id="catGrid"></div></div>
-          <div class="field"><label>地点（记录去过的地方，可选）</label><input type="text" id="f-place" placeholder="如：日本·东京（输入后会在地球上标记）" list="placeList" autocomplete="off" /><datalist id="placeList"></datalist></div>
+          <div class="field"><label data-i18n="lb_title">标题</label><input type="text" id="f-title" placeholder="如：国家奖学金" /></div>
+          <div class="field"><label data-i18n="lb_date">日期</label><input type="date" id="f-date" /></div>
+          <div class="field"><label data-i18n="lb_desc">描述</label><textarea id="f-desc" placeholder="记录这份成就背后的故事…"></textarea></div>
+          <div class="field"><label data-i18n="lb_img">图片</label><div class="imgbox" id="imgPick"><span id="imgHint">点击添加图片或视频</span><input type="file" id="f-img" accept="image/*,video/*" style="display:none" /></div></div>
+          <div class="field"><label data-i18n="lb_cat">分类</label><div class="minicat" id="catGrid"></div></div>
           <button class="btn-save" id="saveBtn">保存成就</button>
           <button class="btn-del" id="delBtn" style="display:none">删除此成就</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ②-b 添加足迹 -->
+    <section id="view-footprint" class="view">
+      <div class="screen">
+        <div class="nav2">
+          <button class="nav-btn" data-back><svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="#26241F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-title" id="fpTitle">添加足迹</div>
+          <div style="width:24px"></div>
+        </div>
+        <div class="formcard">
+          <div class="form-title" id="fpFormTitle">添加足迹</div>
+          <div class="field"><label data-i18n="lb_title">标题</label><input type="text" id="fp-title" placeholder="如：东京赏樱之旅" /></div>
+          <div class="field"><label data-i18n="lb_date">日期</label><input type="date" id="fp-date" /></div>
+          <div class="field"><label data-i18n="lb_place">地点（标在地球上）</label><input type="text" id="fp-place" placeholder="如：日本·东京（输入后会在地球上标记）" list="fpPlaceList" autocomplete="off" /><datalist id="fpPlaceList"></datalist></div>
+          <div class="field"><label data-i18n="lb_text">文字</label><textarea id="fp-text" placeholder="记录这段足迹的故事…"></textarea></div>
+          <div class="field"><label data-i18n="lb_img">图片</label><div class="imgbox" id="fpImgPick"><span id="fpImgHint">点击添加图片或视频</span><input type="file" id="fpImg" accept="image/*,video/*" style="display:none" /></div></div>
+          <button class="btn-save" id="fpSaveBtn">保存足迹</button>
+          <button class="btn-del" id="fpDelBtn" style="display:none">删除此足迹</button>
         </div>
       </div>
     </section>
@@ -389,8 +443,15 @@
             导出PDF
           </button>
         </div>
+        <div class="share-banner" id="shareBanner">这是通过二维码分享过来的简历（只读）</div>
+        <div class="res-editbar">
+          <span class="hint">向左滑动开启编辑 · 向右滑动锁定</span>
+          <button class="reset" id="resReset">重置为自动生成</button>
+          <div class="slider" id="editSlider"><div class="knob" id="editKnob">锁定</div></div>
+        </div>
         <div class="syncbar"><span class="sync-dot"></span><span class="sync-text" id="syncText">已根据 0 条成就实时更新</span></div>
         <div class="paper" id="paper"></div>
+        <input type="file" id="resPhotoInput" accept="image/*" style="display:none" />
       </div>
     </section>
 
@@ -417,8 +478,8 @@
         </div>
         <div class="formcard">
           <div class="form-title">我想在那天达成…</div>
-          <div class="field"><label>目标名称</label><input type="text" id="g-title" placeholder="如：英语六级刷到 600 分" /></div>
-          <div class="field"><label>目标日期</label><input type="date" id="g-date" /></div>
+          <div class="field"><label data-i18n="lb_goal_title">目标名称</label><input type="text" id="g-title" placeholder="如：英语六级刷到 600 分" /></div>
+          <div class="field"><label data-i18n="lb_goal_date">目标日期</label><input type="date" id="g-date" /></div>
           <button class="btn-save" id="gSaveBtn">保存目标</button>
           <button class="btn-del" id="gDelBtn" style="display:none">删除此目标</button>
         </div>
@@ -430,15 +491,27 @@
       <div class="screen">
         <div class="nav2">
           <button class="nav-btn" data-back><svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="#26241F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="nav-title">我的</div>
+          <div class="nav-title" data-i18n="nav_my">我的</div>
           <div style="width:24px"></div>
         </div>
         <div class="profile-head">
           <div class="pavatar" id="pAvatar">林</div>
-          <div><div style="font-size:18px;font-weight:700" id="pName">林知远</div><div style="font-size:13px;color:var(--muted)" id="pSchool">某大学 · 计算机科学与技术</div></div>
+          <div><div class="p-name" id="pName">林知远</div><div class="p-sub" id="pSchool">某大学</div><div class="p-sub" id="pMajor">计算机科学与技术</div></div>
+        </div>
+        <div class="qr-box">
+          <img id="qrImg" alt="简历二维码" />
+          <div><div class="qr-t" data-i18n="qr_t">扫码查看我的简历</div><div class="qr-d" data-i18n="qr_d">用手机相机扫描，即可直接打开我的简历页</div></div>
         </div>
         <div class="stat-row" id="statRow"></div>
-        <div style="padding:0 20px"><button class="btn-del" id="clearBtn" style="width:100%;height:48px;border:1px solid var(--border);border-radius:12px;background:var(--surface)">清空全部成就数据</button></div>
+        <div class="setting-row">
+          <div class="setting-label" data-i18n="lang_label">语言</div>
+          <div class="lang-seg">
+            <button class="lang-opt" data-lang="zh" id="langZh" data-i18n="lang_zh">普通话</button>
+            <button class="lang-opt" data-lang="yue" id="langYue" data-i18n="lang_yue">粤语</button>
+          </div>
+        </div>
+        <div style="padding:0 20px"><button class="btn-del" id="clearBtn" style="width:100%;height:48px;border:1px solid var(--border);border-radius:12px;background:var(--surface)" data-i18n="clear_all">清空全部成就数据</button></div>
+        <input type="file" id="pAvatarInput" accept="image/*" style="display:none" />
       </div>
     </section>
 
@@ -448,16 +521,14 @@
       <div class="screen">
         <div class="nav2">
           <button class="nav-btn" data-back><svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="#26241F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="nav-title">我的足迹</div>
-          <div style="width:24px"></div>
-        </div>
-        <div class="globe-tip">拖动地球可 360° 旋转 · 双指或按钮缩放 · 金色亮点是你记录去过的地方</div>
+        <div class="nav-title">我的足迹</div>
+        <div style="width:24px"></div>
+      </div>
         <div class="globe-wrap" id="globeWrap">
           <div class="globe-stage" id="globeStage"><canvas id="earthCanvas"></canvas><div class="globe-markers" id="globeMarkers"></div></div>
           <div class="zoom-ctl"><button id="zoomIn" aria-label="放大">＋</button><button id="zoomOut" aria-label="缩小">－</button></div>
-          <div class="globe-hint">拖动旋转 · 双指 / 按钮缩放</div>
         </div>
-        <div class="prevhdr"><div class="prevtitle">已去过的地点</div><div class="countchip" id="globeCount">0</div></div>
+        <div class="prevhdr"><div class="prevtitle" data-i18n="visited">已去过的地点</div><div class="countchip" id="globeCount">0</div></div>
         <div class="places-list" id="placesList"></div>
       </div>
     </section>
@@ -471,23 +542,23 @@
     <div class="tabpill">
       <button class="tab on" data-tab="calendar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
-        <span>日历</span>
+        <span data-i18n="tab_calendar">日历</span>
       </button>
       <button class="tab" data-tab="list">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="5"/><path d="M9 13l-2 8 5-3 5 3-2-8"/></svg>
-        <span>成就</span>
+        <span data-i18n="tab_list">成就</span>
       </button>
       <button class="tab" data-tab="resume">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg>
-        <span>简历</span>
+        <span data-i18n="tab_resume">简历</span>
       </button>
       <button class="tab" data-tab="globe">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
-        <span>足迹</span>
+        <span data-i18n="tab_globe">足迹</span>
       </button>
       <button class="tab" data-tab="profile">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-        <span>我的</span>
+        <span data-i18n="tab_profile">我的</span>
       </button>
     </div>
   </nav>
@@ -503,6 +574,68 @@
   var STORE="achievement_app_v1";
   var CATS=["奖项","荣誉","竞赛","实习","项目","证书"];
   var CATCOLOR={"奖项":"#C28A2B","荣誉":"#BFA161","竞赛":"#B5664A","实习":"#5C8C7A","项目":"#6E80B0","证书":"#BFA161"};
+  var LANGKEY="achievement_lang_v1";
+  var curLang=(function(){try{return localStorage.getItem(LANGKEY)||"zh";}catch(e){return "zh";}})();
+  var I18N={
+    tab_calendar:{zh:"日历",yue:"日曆"}, tab_list:{zh:"成就",yue:"成就"}, tab_resume:{zh:"简历",yue:"履歷"},
+    tab_globe:{zh:"足迹",yue:"足跡"}, tab_profile:{zh:"我的",yue:"我嘅"},
+    nav_my:{zh:"我的",yue:"我嘅"},
+    qr_t:{zh:"扫码查看我的简历",yue:"掃碼睇我嘅履歷"},
+    qr_d:{zh:"用手机相机扫描，即可直接打开我的简历页",yue:"用手機相機掃描，就可以直接開啟我嘅履歷頁"},
+    clear_all:{zh:"清空全部成就数据",yue:"清空所有成就資料"},
+    add_ach:{zh:"添加成就",yue:"新增成就"}, edit_ach:{zh:"编辑成就",yue:"編輯成就"},
+    add_fp:{zh:"添加足迹",yue:"新增足跡"}, edit_fp:{zh:"编辑足迹",yue:"編輯足跡"},
+    save:{zh:"保存",yue:"儲存"}, del:{zh:"删除",yue:"刪除"},
+    view_globe:{zh:"在地球上查看",yue:"喺地球度檢視"},
+    edit:{zh:"编辑",yue:"編輯"}, lock:{zh:"锁定",yue:"鎖定"},
+    fab_ach:{zh:"记录一条成就",yue:"記錄一項成就"}, fab_fp:{zh:"添加一个足迹",yue:"新增一個足跡"}, fab_goal:{zh:"设立一个目标",yue:"設立一個目標"},
+    lb_title:{zh:"标题",yue:"標題"}, lb_date:{zh:"日期",yue:"日期"}, lb_cat:{zh:"分类",yue:"分類"},
+    lb_img:{zh:"图片",yue:"圖片"}, lb_place:{zh:"地点",yue:"地點"}, lb_text:{zh:"文字",yue:"文字"},
+    lb_goal_title:{zh:"目标名称",yue:"目標名稱"}, lb_goal_date:{zh:"目标日期",yue:"目標日期"},
+    d_desc:{zh:"成就描述",yue:"成就描述"}, d_no_desc:{zh:"暂无描述",yue:"暫時無描述"},
+    d_fp_note:{zh:"足迹笔记",yue:"足跡筆記"}, d_no_text:{zh:"暂无文字",yue:"暫時無文字"},
+    empty_list:{zh:"没有匹配的成就",yue:"搵唔到相符嘅成就"},
+    empty_globe_fp:{zh:"点右下角 ➕ 添加一条足迹吧",yue:"撳右下角 ➕ 新增一條足跡啦"},
+    empty_globe:{zh:"还没有足迹，点右下角 ➕ 添加一条足迹吧",yue:"仲未有用足跡，撳右下角 ➕ 新增一條足跡啦"},
+    empty_month:{zh:"本月还没有成就，点右下角 ＋ 记录第一条吧",yue:"呢個月仲未有功成就，撳右下角 ＋ 記錄第一條啦"},
+    t_title:{zh:"请填写标题",yue:"請填標題"}, t_date:{zh:"请选择日期",yue:"請選日期"},
+    t_saved:{zh:"已保存",yue:"已儲存"}, t_updated:{zh:"已更新",yue:"已更新"}, t_deleted:{zh:"已删除",yue:"已刪除"},
+    t_big:{zh:"文件较大，本地存储仅约 5MB，可能无法保存",yue:"檔案太大，本地儲存大概得 5MB，可能儲存唔到"},
+    t_fail:{zh:"保存失败：本地存储空间不足，可能是图片/视频过大",yue:"儲存失敗：本地空間唔夠，可能係圖片或者影片太大"},
+    t_record_first:{zh:"记得把它记录成一条成就",yue:"記得將佢記錄成一條成就"},
+    stat_total:{zh:"成就总数",yue:"成就總數"}, stat_award:{zh:"获奖荣誉",yue:"獲獎榮譽"}, stat_comp:{zh:"竞赛奖项",yue:"競賽獎項"},
+    sec_edu:{zh:"教育背景",yue:"教育背景"}, sec_award:{zh:"获奖荣誉",yue:"獲獎榮譽"},
+    sec_comp:{zh:"竞赛经历",yue:"競賽經歷"}, sec_cert:{zh:"技能证书",yue:"技能證書"}, undergrad:{zh:"本科",yue:"本科"},
+    visited:{zh:"已去过的地点",yue:"去過嘅地方"},
+    lang_label:{zh:"语言",yue:"語言"}, lang_zh:{zh:"普通话",yue:"普通話"}, lang_yue:{zh:"粤语",yue:"粵語"},
+    goal_due:{zh:"目标日期到了",yue:"目標日期到咗"}, goal_prefix:{zh:"你给「",yue:"你俾「"},
+    goal_suffix:{zh:"」定的日期是 ",yue:"」定嘅日期係 "}, goal_q:{zh:"，这个目标达成了吗？",yue:"，呢個目標達成咗未？"},
+    goal_done:{zh:"达成了",yue:"達成咗"}, goal_later:{zh:"再等等",yue:"再等等"}, goal_miss:{zh:"没达成",yue:"未達成"},
+    view_footprint:{zh:"在地球上查看足迹",yue:"喺地球度檢視足跡"},
+    view_day_ach:{zh:"查看这一天的成就",yue:"睇呢一日嘅成就"}, view_day_goal:{zh:"查看这一天的目标",yue:"睇呢一日嘅目標"},
+    set_goal_day:{zh:"在这一天设立目标",yue:"喺呢一日設立目標"},
+    cat_奖项:{zh:"获奖荣誉",yue:"獲獎榮譽"}, cat_荣誉:{zh:"获奖荣誉",yue:"獲獎榮譽"}, cat_竞赛:{zh:"竞赛经历",yue:"競賽經歷"},
+    cat_实习:{zh:"实习经历",yue:"實習經歷"}, cat_项目:{zh:"项目经历",yue:"項目經歷"}, cat_证书:{zh:"技能证书",yue:"技能證書"}
+  };
+  function t(k){var o=I18N[k];if(!o)return k;return curLang==="yue"&&o.yue!=null?o.yue:o.zh;}
+  function achTitle(a){return curLang==="yue"&&a&&a.titleY?a.titleY:a.title;}
+  function achDesc(a){return curLang==="yue"&&a&&a.descY?a.descY:a.desc;}
+  function fpTitle(f){return curLang==="yue"&&f&&f.titleY?f.titleY:f.title;}
+  function fpPlace(f){return curLang==="yue"&&f&&f.placeY?f.placeY:f.place;}
+  function fpText(f){return curLang==="yue"&&f&&f.textY?f.textY:f.text;}
+  function byFpId(id){return footprints.filter(function(x){return x.id===id;})[0];}
+  function syncLangButtons(){document.querySelectorAll(".lang-opt").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-lang")===curLang);});}
+  function applyLang(){document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(el.hasAttribute("data-i18n-html"))el.innerHTML=t(k);else el.textContent=t(k);});syncLangButtons();}
+  var activeView=null, shownDetailId=null, shownFpId=null;
+  function setLang(l){curLang=l;try{localStorage.setItem(LANGKEY,l);}catch(e){}applyLang();refreshLangViews();}
+  function refreshLangViews(){
+    if(activeView==="profile")openProfile();
+    else if(activeView==="list")renderList($("#listInput").value);
+    else if(activeView==="resume")openResume();
+    else if(activeView==="globe")openGlobe();
+    else if(activeView==="calendar")renderCalendar();
+    else if(activeView==="detail"){ if(shownDetailId!=null)openDetail(shownDetailId); else if(shownFpId!=null)openFootprintDetail(byFpId(shownFpId)); }
+  }
   var PLACE={
     "中国北京":[39.90,116.40],"中国上海":[31.23,121.47],"中国广州":[23.13,113.26],"中国香港":[22.32,114.17],
     "中国台北":[25.03,121.57],"中国澳门":[22.20,113.54],"中国成都":[30.57,104.07],"中国西安":[34.34,108.94],
@@ -517,7 +650,11 @@
     "新西兰奥克兰":[-36.85,174.76],"巴西里约热内卢":[-22.91,-43.17],"南非开普敦":[-33.92,18.42],"冰岛雷克雅未克":[64.15,-21.94]
   };
   var CATMAP={"奖项":"获奖荣誉","荣誉":"获奖荣誉","竞赛":"竞赛经历","实习":"实习经历","项目":"项目经历","证书":"技能证书"};
-  var profile={name:"林知远",school:"某大学 · 计算机科学与技术",sub:"计算机科学 · 求职意向：产品 / 运营",contact:"某大学 · 138-0000-0000 · linzy@mail.edu"};
+  var PSTORE="achievement_profile_v1", RSTORE="achievement_resume_v1";
+  function loadProfile(){try{var p=JSON.parse(localStorage.getItem(PSTORE));if(p&&p.name)return p;}catch(e){}return {name:"林知远",university:"某大学",major:"计算机科学与技术",sub:"计算机科学 · 求职意向：产品 / 运营",contact:"某大学 · 138-0000-0000 · linzy@mail.edu",avatar:""};}
+  function saveProfile(){try{localStorage.setItem(PSTORE,JSON.stringify(profile));}catch(e){}}
+  var profile=loadProfile();
+  var resumeOverride=null;try{resumeOverride=localStorage.getItem(RSTORE);}catch(e){}
   var seed=[
     {id:1,title:"国家奖学金",date:"2024-11-15",cat:"奖项",level:"国家级",desc:"在2024学年国家奖学金评选中，凭借优异的学业成绩与科研实践表现，从全院300余名候选人中脱颖而出，获评本学年国家奖学金（覆盖率约0.2%）。",img:""},
     {id:2,title:"全国大学生数学建模竞赛 一等奖",date:"2024-09-20",cat:"竞赛",level:"国家级",desc:"与队友协作完成《城市快递配送路径优化》课题，建立混合整数规划模型，获全国一等奖。",img:""},
@@ -551,16 +688,34 @@
   ];localStorage.setItem(GSTORE,JSON.stringify(goals));}
   function saveGoals(){localStorage.setItem(GSTORE,JSON.stringify(goals));}
 
-  var state={year:2025,month:10,selDate:"",editingId:null,gEditing:null,curCat:"奖项",curImg:"",curLat:null,curLng:null};
+  // 足迹（地点+标题+文字+图片，标在地球上）数据层
+  var FSTORE="achievement_footprints_v1";
+  var fpSeed=[
+    {id:101,title:"冰岛极光之旅",place:"冰岛·雷克雅未克",date:"2024-12-20",text:"在零下十度的荒原里等到了绿色极光，一辈子难忘。",img:"",lat:64.15,lng:-21.94},
+    {id:102,title:"悉尼跨年",place:"澳大利亚·悉尼",date:"2025-01-01",text:"悉尼港的烟火和歌剧院，新年的第一站。",img:"",lat:-33.87,lng:151.21}
+  ];
+  var footprints;
+  try{footprints=JSON.parse(localStorage.getItem(FSTORE))||null;}catch(e){footprints=null;}
+  if(!footprints){footprints=fpSeed.slice();localStorage.setItem(FSTORE,JSON.stringify(footprints));}
+  function saveFootprints(){
+    try{localStorage.setItem(FSTORE,JSON.stringify(footprints));return true;}
+    catch(e){toast("保存失败：本地存储空间不足，可能是图片/视频过大");return false;}
+  }
 
-  function save(){localStorage.setItem(STORE,JSON.stringify(data));}
+  var state={year:2025,month:10,selDate:"",editingId:null,gEditing:null,curCat:"奖项",curImg:"",curLat:null,curLng:null};
+  state.fpLat=null;state.fpLng=null;state.fpEditingId=null;state.fpImg="";
+
+  function save(){
+    try{localStorage.setItem(STORE,JSON.stringify(data));return true;}
+    catch(e){toast("保存失败：本地存储空间不足，可能是图片/视频过大");return false;}
+  }
   function $(s){return document.querySelector(s);}
   function byId(id){return data.filter(function(d){return d.id==id;})[0];}
   function fmtCN(d){var p=d.split("-");return (p[1].replace(/^0/,"")*1)+"月"+(p[2].replace(/^0/,"")*1)+"日";}
   function weekCN(d){var p=d.split("-");var dt=new Date(p[0]*1,p[1]-1,p[2]*1);return "周"+"日一二三四五六".charAt(dt.getDay());}
   function toast(msg){var t=$("#toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},1400);}
   function catColor(c){return CATCOLOR[c]||"#C28A2B";}
-  function showView(id){document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});$("#view-"+id).classList.add("active");$(".views").scrollTop=0;}
+  function showView(id){activeView=id;document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});$("#view-"+id).classList.add("active");$(".views").scrollTop=0;}
 
   // 日历
   function renderCalendar(){
@@ -705,15 +860,11 @@
 
   // 分类选择（顶部 + 表单内）
   function renderCats(){
-    var top=$("#dayCats");top.innerHTML="";
     var mini=$("#catGrid");mini.innerHTML="";
     CATS.forEach(function(c){
-      var b1=document.createElement("button");b1.type="button";b1.className="chip-cat"+(state.curCat===c?" on":"");b1.textContent=c;
-      b1.addEventListener("click",function(){state.curCat=c;renderCats();});
-      top.appendChild(b1);
-      var b2=document.createElement("button");b2.type="button";b2.className="chip-cat"+(state.curCat===c?" on":"");b2.textContent=c;
-      b2.addEventListener("click",function(){state.curCat=c;renderCats();});
-      mini.appendChild(b2);
+      var b=document.createElement("button");b.type="button";b.className="chip-cat"+(state.curCat===c?" on":"");b.textContent=t("cat_"+c);
+      b.addEventListener("click",function(){state.curCat=c;renderCats();});
+      mini.appendChild(b);
     });
   }
 
@@ -721,12 +872,11 @@
   function openAdd(ds,editing){
     showView("day");
     state.editingId=editing?editing.id:null;state.curImg=editing?editing.img:"";state.curCat=editing?editing.cat:"奖项";
-    $("#addTitle").textContent=editing?"编辑成就":"添加成就";
-    $("#dayTitle").textContent=editing?(fmtCN(editing.date)+" "+weekCN(editing.date)):(ds?(fmtCN(ds)+" "+weekCN(ds)):"添加成就");
+    $("#addTitle").textContent=editing?t("edit_ach"):t("add_ach");
+    $("#dayTitle").textContent=editing?(fmtCN(editing.date)+" "+weekCN(editing.date)):(ds?(fmtCN(ds)+" "+weekCN(ds)):t("add_ach"));
     $("#f-title").value=editing?editing.title:"";
     $("#f-date").value=editing?editing.date:(ds||state.selDate||"2025-11-01");
     $("#f-desc").value=editing?editing.desc:"";
-    $("#f-place").value=editing?editing.place||"":"";
     state.curLat=editing&&editing.lat!=null?editing.lat:null;
     state.curLng=editing&&editing.lng!=null?editing.lng:null;
     renderCats();renderImgPick();
@@ -734,8 +884,42 @@
   }
   function renderImgPick(){
     var p=$("#imgPick");
-    if(state.curImg){p.innerHTML='<img src="'+state.curImg+'"/>';}
-    else{p.innerHTML='<span id="imgHint">点击添加图片</span>';}
+    if(state.curImg){p.innerHTML=mediaTag(state.curImg,{controls:true});}
+    else{p.innerHTML='<span id="imgHint">点击添加图片或视频</span>';}
+  }
+  function renderFpImg(){
+    var p=$("#fpImgPick");
+    if(state.fpImg){p.innerHTML=mediaTag(state.fpImg,{controls:true});}
+    else{p.innerHTML='<span id="fpImgHint">点击添加图片或视频</span>';}
+  }
+  function openFootprint(fp){
+    showView("footprint");
+    state.fpEditingId=fp?fp.id:null;state.fpImg=fp?fp.img:"";state.fpLat=fp&&fp.lat!=null?fp.lat:null;state.fpLng=fp&&fp.lng!=null?fp.lng:null;
+    $("#fpTitle").textContent=fp?t("edit_fp"):t("add_fp");
+    $("#fpFormTitle").textContent=fp?t("edit_fp"):t("add_fp");
+    $("#fp-title").value=fp?fp.title:"";
+    $("#fp-date").value=fp?fp.date:(state.selDate||todayStr());
+    $("#fp-place").value=fp?fp.place||"":"";
+    $("#fp-text").value=fp?fp.text||"":"";
+    renderFpImg();
+    $("#fpDelBtn").style.display=fp?"block":"none";
+  }
+  function openFootprintDetail(fp){
+    showView("detail");$("#detailTitle").textContent=fpTitle(fp);shownFpId=fp.id;shownDetailId=null;
+    var hero=fp.img?'<div class="hero">'+mediaTag(fp.img,{controls:true})+'</div>':'<div class="hero"></div>';
+    $("#detailBody").innerHTML=hero+
+      '<div class="d-body">'+
+      '<div class="d-title">'+esc(fpTitle(fp))+'</div>'+
+      '<div class="d-meta"><span>'+esc(fpPlace(fp)||"")+'</span><span>'+fp.date+' '+weekCN(fp.date)+'</span></div>'+
+      '<div class="d-divider"></div>'+
+      '<div class="d-label">'+t("d_fp_note")+'</div>'+
+      '<div class="d-desc">'+(fpText(fp)||t("d_no_text"))+'</div>'+
+      '</div>';
+    $("#editBtn").onclick=function(){openFootprint(fp);};
+    if(fp.lat!=null){
+      $("#detailBody").insertAdjacentHTML("beforeend",'<button class="btn-edit" id="globeViewBtn" style="background:var(--gold-soft);color:var(--gold);margin-top:12px">'+t("view_globe")+'</button>');
+      $("#globeViewBtn").onclick=function(){openGlobe();};
+    }
   }
 
   // 列表 / 搜索
@@ -759,8 +943,8 @@
   }
   function resCard(a){
     var c=document.createElement("div");c.className="rescard";
-    var th=a.img?'<div class="thumb"><img src="'+a.img+'"/></div>':'<div class="thumb">'+a.title.charAt(0)+'</div>';
-    c.innerHTML=th+'<div class="res-body"><div class="res-title">'+a.title+'</div><div class="res-meta">'+(a.cat)+(a.level?(" · "+a.level):"")+' · '+a.date+'</div></div>';
+    var th=a.img?'<div class="thumb">'+mediaTag(a.img)+'</div>':'<div class="thumb">'+achTitle(a).charAt(0)+'</div>';
+    c.innerHTML=th+'<div class="res-body"><div class="res-title">'+achTitle(a)+'</div><div class="res-meta">'+(a.cat)+(a.level?(" · "+a.level):"")+' · '+a.date+'</div></div>';
     c.addEventListener("click",function(){openDetail(a.id);});
     return c;
   }
@@ -768,54 +952,113 @@
     var body=$("#listBody");body.innerHTML="";
     var items=data.slice().sort(function(a,b){return a.date<b.date?1:-1;});
     if(q){q=q.trim();items=items.filter(function(x){return (x.title+x.desc+x.cat).toLowerCase().indexOf(q.toLowerCase())>=0;});}
-    if(items.length===0){body.innerHTML='<div class="empty">没有匹配的成就</div>';return;}
+    if(items.length===0){body.innerHTML='<div class="empty">'+t("empty_list")+'</div>';return;}
     if(q){$("#resultsH").style.display="block";$("#resultsH").textContent="找到 "+items.length+" 条相关成就";}
     else{$("#resultsH").style.display="none";}
     items.forEach(function(a){body.appendChild(resCard(a));});
   }
 
   // 简历（按设计：教育背景 / 获奖荣誉 / 竞赛经历 / 技能证书）
-  function openResume(){
-    showView("resume");
-    $("#syncText").textContent="已根据 "+data.length+" 条成就实时更新";
-    var order=["奖项","竞赛","证书"]; // 设计稿四段：教育背景 + 获奖荣誉 + 竞赛经历 + 技能证书（荣誉并入获奖荣誉）
-    var p=$("#paper");
-    var html='<div class="doc-name">'+profile.name+'</div>'+
-      '<div class="doc-sub">'+profile.sub+'</div>'+
-      '<div class="doc-contact">'+profile.contact+'</div>'+
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function b64(s){return btoa(unescape(encodeURIComponent(s)));}
+  function ub64(s){return decodeURIComponent(escape(atob(s)));}
+  function isVideo(src){return typeof src==="string" && src.indexOf("data:video/")===0;}
+  function mediaTag(src,opts){
+    if(!src)return "";
+    opts=opts||{};
+    if(isVideo(src)){
+      return '<video'+(opts.cls?' class="'+opts.cls+'"':'')+(opts.controls?' controls':'')+
+        ' src="'+src+'" muted playsinline preload="metadata"></video>';
+    }
+    return '<img'+(opts.cls?' class="'+opts.cls+'"':'')+' src="'+src+'"/>';
+  }
+  function buildResumeHTML(){
+    var order=["奖项","竞赛","证书"];
+    var html='<div class="doc-head"><div class="photo" id="resPhotoSlot">证件照</div>'+
+      '<div class="doc-meta"><div class="doc-name">'+esc(profile.name)+'</div>'+
+      '<div class="doc-sub">'+esc(profile.sub)+'</div>'+
+      '<div class="doc-contact">'+esc(profile.contact)+'</div></div></div>'+
       '<div class="divider"></div>'+
       '<div class="sec">教育背景</div>'+
-      '<div class="line">某大学  计算机科学与技术 ｜ 本科  2021.09–2025.06 ｜ GPA 3.8/4.0</div>';
+      '<div class="line">'+esc(profile.university)+'  '+esc(profile.major)+' ｜ 本科  2021.09–2025.06 ｜ GPA 3.8/4.0</div>';
     order.forEach(function(cat){
       var group=data.filter(function(x){return x.cat===cat;}).sort(function(a,b){return a.date<b.date?1:-1;});
       if(group.length===0)return;
       html+='<div class="sec">'+CATMAP[cat]+'</div>';
       group.forEach(function(a){
-        html+='<div class="line">• '+a.date.slice(0,7).replace("-",".")+'  '+a.title+(a.level?('（'+a.level+'）'):'')+'</div>';
+        html+='<div class="line">• '+a.date.slice(0,7).replace("-",".")+'  '+esc(a.title)+(a.level?('（'+a.level+'）'):'')+'</div>';
       });
     });
-    p.innerHTML=html;
+    return html;
+  }
+  function bindPhotoSlot(){
+    var slot=$("#resPhotoSlot");if(!slot)return;
+    slot.classList.add("editable");
+    slot.onclick=function(){ if(!$("#paper").classList.contains("editing"))return; $("#resPhotoInput").click(); };
+  }
+  function setEditModeUI(on){
+    var p=$("#paper");p.classList.toggle("editing",on);
+    $("#editSlider").classList.toggle("on",on);
+    $("#editKnob").textContent=on?"编辑":"锁定";
+    p.querySelectorAll(".doc-name,.doc-sub,.doc-contact,.sec,.line").forEach(function(el){el.setAttribute("contenteditable",on?"true":"false");});
+    $("#resReset").classList.toggle("show",on&&!!resumeOverride);
+  }
+  function lockResume(){
+    resumeOverride=$("#paper").innerHTML;
+    try{localStorage.setItem(RSTORE,resumeOverride);}catch(e){}
+    $("#resReset").classList.remove("show");toast("简历已锁定保存");
+  }
+  function openResume(){
+    showView("resume");
+    $("#shareBanner").style.display="none";
+    $("#syncText").textContent="已根据 "+data.length+" 条成就实时更新";
+    var p=$("#paper");
+    p.innerHTML=resumeOverride?resumeOverride:buildResumeHTML();
+    bindPhotoSlot();
+    setEditModeUI(false);
+    $("#resReset").classList.toggle("show",!!resumeOverride);
+  }
+  // 我的页二维码：扫码直接打开“分享版简历”
+  function shareResumeURL(){
+    var obj={n:profile.name,s:profile.sub,c:profile.contact,h:buildResumeHTML()};
+    return location.origin+location.pathname+"#/resume/"+b64(JSON.stringify(obj));
+  }
+  function genQR(){$("#qrImg").src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data="+encodeURIComponent(shareResumeURL());}
+  function applySharedResume(){
+    var h=location.hash||"";
+    if(h.indexOf("#/resume/")!==0)return false;
+    try{
+      var obj=JSON.parse(ub64(h.slice(9)));
+      showView("resume");
+      document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("on",t.dataset.tab==="resume");});
+      var p=$("#paper");
+      p.innerHTML='<div class="doc-head"><div class="photo">证件照</div><div class="doc-meta"><div class="doc-name">'+esc(obj.n)+'</div><div class="doc-sub">'+esc(obj.s)+'</div><div class="doc-contact">'+esc(obj.c)+'</div></div></div><div class="divider"></div>'+obj.h;
+      setEditModeUI(false);
+      $("#shareBanner").style.display="block";
+      $("#resReset").classList.remove("show");
+      return true;
+    }catch(e){return false;}
   }
 
   // 详情
   function openDetail(id){
     var a=byId(id);if(!a)return;
-    showView("detail");$("#detailTitle").textContent=a.title;
-    var hero=a.img?'<div class="hero"><img src="'+a.img+'"/></div>':'<div class="hero"></div>';
+    showView("detail");$("#detailTitle").textContent=achTitle(a);shownDetailId=a.id;shownFpId=null;
+    var hero=a.img?'<div class="hero">'+mediaTag(a.img,{controls:true})+'</div>':'<div class="hero"></div>';
     var tags='<div class="tags"><span class="tag"># '+a.cat+'</span><span class="tag"># '+a.date.slice(0,4)+'</span></div>';
     $("#detailBody").innerHTML=hero+
       '<div class="d-body">'+
       '<span class="badge">'+a.cat+'</span>'+
-      '<div class="d-title">'+a.title+'</div>'+
+      '<div class="d-title">'+achTitle(a)+'</div>'+
       '<div class="d-meta"><span>'+a.date+' '+weekCN(a.date)+'</span>'+(a.level?'<span>'+a.level+'</span>':'')+'</div>'+
       '<div class="d-divider"></div>'+
-      '<div class="d-label">成就描述</div>'+
-      '<div class="d-desc">'+(a.desc||"暂无描述")+'</div>'+
+      '<div class="d-label">'+t("d_desc")+'</div>'+
+      '<div class="d-desc">'+(achDesc(a)||t("d_no_desc"))+'</div>'+
       tags+
       '</div>';
     $("#editBtn").onclick=function(){openAdd(a.date,a);};
     if(a.lat!=null){
-      $("#detailBody").insertAdjacentHTML("beforeend",'<button class="btn-edit" id="globeViewBtn" style="background:var(--gold-soft);color:var(--gold);margin-top:12px">在地球上查看</button>');
+      $("#detailBody").insertAdjacentHTML("beforeend",'<button class="btn-edit" id="globeViewBtn" style="background:var(--gold-soft);color:var(--gold);margin-top:12px">'+t("view_globe")+'</button>');
       $("#globeViewBtn").onclick=function(){openGlobe(a.id);};
     }
   }
@@ -823,6 +1066,11 @@
   // 我的
   function openProfile(){
     showView("profile");
+    renderAvatar();
+    $("#pName").textContent=profile.name;
+    $("#pSchool").textContent=profile.university;
+    $("#pMajor").textContent=profile.major;
+    genQR();
     var cats={};data.forEach(function(d){cats[d.cat]=(cats[d.cat]||0)+1;});
     var total=data.length;var award=(cats["奖项"]||0)+(cats["荣誉"]||0);var comp=cats["竞赛"]||0;
     $("#statRow").innerHTML='<div class="stat"><div class="n">'+total+'</div><div class="l">成就总数</div></div>'+
@@ -928,6 +1176,12 @@
     ectx.fillStyle=grd;ectx.beginPath();ectx.arc(cx,cy,R*1.12,0,Math.PI*2);ectx.fill();
   }
   function scheduleEarth(){ if(earthRAF)return; earthRAF=requestAnimationFrame(function(){earthRAF=null;drawEarth();}); }
+  function allPlaces(){
+    var a=data.filter(function(d){return d.lat!=null&&d.lng!=null;}).map(function(d){return {id:d.id,lat:d.lat,lng:d.lng,kind:"a",name:(d.place||d.title),date:d.date,title:d.title};});
+    var b=footprints.filter(function(f){return f.lat!=null&&f.lng!=null;}).map(function(f){return {id:f.id,lat:f.lat,lng:f.lng,kind:"fp",name:(f.place||f.title),date:f.date,title:f.title};});
+    return a.concat(b);
+  }
+  function byAll(id){return byId(id)||footprints.filter(function(x){return x.id==id;})[0];}
   function projectMarker(lat,lon){
     var T=GLOBE.tilt*Math.PI/180, S=GLOBE.spin*Math.PI/180;
     var cT=Math.cos(T),sT=Math.sin(T),cS=Math.cos(S),sS=Math.sin(S);
@@ -940,74 +1194,138 @@
   }
   function renderGlobe(){
     if(markersWrap){
-      var places=data.filter(function(d){return d.lat!=null&&d.lng!=null;});
+      var places=allPlaces();
       var size=ec.clientWidth||300, cx=size/2, cy=size/2;
       var R=Math.min(size/2*0.97, size/2*0.82*GLOBE.zoom);
       markersWrap.innerHTML="";
       places.forEach(function(p){
         var pr=projectMarker(p.lat,p.lng);
         if(!pr.front)return;
-        var m=document.createElement("div");m.className="globe-marker";
+        var m=document.createElement("div");m.className="globe-marker"+(p.kind==="fp"?" fp":"");
         m.style.left=(cx+pr.nx*R)+"px";m.style.top=(cy+pr.ny*R)+"px";
         var s=0.7+pr.nz*0.6; m.style.transform="scale("+s.toFixed(2)+")";
         m.style.zIndex=Math.round(pr.nz*10);
-        m.dataset.id=p.id; m.title=(p.place||p.title);
+        m.dataset.id=p.id; m.dataset.kind=p.kind; m.title=p.name;
         markersWrap.appendChild(m);
       });
     }
     scheduleEarth();
   }
+  // 银河背景：种子随机生成星场，rAF 循环做闪烁动画
+  var galaxyRAF=null, galaxyStars=null, galaxyW=0, galaxyH=0, galaxyT0=0;
+  function gRnd(s){return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
+  function buildGalaxyStars(w,h){
+    var rnd=gRnd(20261102);
+    var stars=[];
+    var n=Math.round((w*h)/620);     // 主星层：更密
+    var tiny=Math.round((w*h)/300);  // 微星层：远景弥散星尘
+    for(var i=0;i<n+tiny;i++){
+      var isTiny=i>=n;
+      var x=rnd()*w, y=rnd()*h;
+      var dx=x-w*0.5, dy=y-h*0.5;
+      var ry=-dx*Math.sin(0.42)+dy*Math.cos(0.42);
+      var inBand=Math.abs(ry)<(h*0.14);
+      var r, baseA;
+      if(isTiny){ r=rnd()*0.6+0.2; baseA=rnd()*0.30+0.10; }
+      else{
+        r=(rnd()*1.15+0.35)*(inBand?1.8:1);
+        baseA=rnd()*0.5+0.38; if(inBand)baseA=Math.min(1,baseA+0.3);
+      }
+      var t=rnd(), col;
+      if(t<0.12) col=[200,215,255];        // 蓝白
+      else if(t<0.22) col=[255,226,188];   // 暖白
+      else if(t<0.30) col=[255,205,150];   // 金黄
+      else if(t<0.35) col=[255,180,212];   // 粉（被星云照亮）
+      else if(t<0.39) col=[170,232,255];   // 青
+      else col=[255,255,255];              // 纯白
+      var glow=false;
+      if(!isTiny){ if(r>=2.2) glow=true; else if(rnd()<0.10) glow=true; else if(inBand&&rnd()<0.22) glow=true; }
+      stars.push({x:x,y:y,r:r,a:baseA,col:col,ph:rnd()*Math.PI*2,sp:0.6+rnd()*1.9,band:inBand,glow:glow});
+    }
+    return stars;
+  }
   function drawGalaxy(){
     var cv=document.getElementById("galaxyBg"); if(!cv)return;
-    var host=cv.parentNode, w=host.clientWidth, h=host.clientHeight; if(!w||!h)return;
+    if(!$("#view-globe").classList.contains("active")){ galaxyRAF=null; return; } // 离开足迹页即停循环
+    var host=cv.parentNode, w=host.clientWidth, h=host.clientHeight;
+    if(!w||!h){ galaxyRAF=requestAnimationFrame(drawGalaxy); return; }
+    if(w!==galaxyW||h!==galaxyH){ galaxyW=w; galaxyH=h; galaxyStars=buildGalaxyStars(w,h); }
     var dpr=Math.min(window.devicePixelRatio||1,2);
-    cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
+    var pw=Math.round(w*dpr), ph=Math.round(h*dpr);
+    if(cv.width!==pw||cv.height!==ph){ cv.width=pw; cv.height=ph; }
     var g=cv.getContext("2d"); g.setTransform(dpr,0,0,dpr,0,0);
-    var bg=g.createRadialGradient(w*0.5,h*0.42,0,w*0.5,h*0.5,Math.max(w,h)*0.85);
-    bg.addColorStop(0,"#0c1030");bg.addColorStop(0.55,"#06071a");bg.addColorStop(1,"#03040c");
+    // 深空底色
+    var bg=g.createRadialGradient(w*0.5,h*0.40,0,w*0.5,h*0.5,Math.max(w,h)*0.9);
+    bg.addColorStop(0,"#0a0e2a");bg.addColorStop(0.5,"#05071a");bg.addColorStop(1,"#02030a");
     g.fillStyle=bg;g.fillRect(0,0,w,h);
-    function neb(cx,cy,rr,col,a){var rg=g.createRadialGradient(cx,cy,0,cx,cy,rr);rg.addColorStop(0,col.replace("A",a));rg.addColorStop(1,col.replace("A",0));g.fillStyle=rg;g.fillRect(cx-rr,cy-rr,rr*2,rr*2);}
-    neb(w*0.28,h*0.32,Math.max(w,h)*0.45,"rgba(98,70,170,A)",0.20);
-    neb(w*0.80,h*0.66,Math.max(w,h)*0.5,"rgba(46,96,170,A)",0.16);
-    neb(w*0.62,h*0.20,Math.max(w,h)*0.32,"rgba(170,70,130,A)",0.12);
-    g.save();g.translate(w*0.5,h*0.5);g.rotate(-0.42);
-    var bandH=h*0.30;
-    var band=g.createLinearGradient(0,-bandH/2,0,bandH/2);
-    band.addColorStop(0,"rgba(255,255,255,0)");band.addColorStop(0.5,"rgba(225,230,255,0.18)");band.addColorStop(1,"rgba(255,255,255,0)");
-    g.fillStyle=band;g.fillRect(-w,-bandH/2,w*2,bandH);g.restore();
-    var rnd=(function(s){return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};})(20261102);
-    var n=Math.round((w*h)/2400);
-    for(var i=0;i<n;i++){
-      var x=rnd()*w,y=rnd()*h;
-      var dx=x-w*0.5,dy=y-h*0.5;
-      var ry=-dx*Math.sin(0.42)+dy*Math.cos(0.42);
-      var inBand=Math.abs(ry)<(h*0.15);
-      var r=(rnd()*0.9+0.3)*(inBand?1.6:1);
-      var a=rnd()*0.55+0.25; if(inBand)a=Math.min(1,a+0.32);
-      var t=rnd();
-      var col=t<0.15?"rgba(180,200,255,A)":t>0.85?"rgba(255,220,180,A)":"rgba(255,255,255,A)";
-      g.fillStyle=col.replace("A",a.toFixed(2));
-      g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fill();
+    // 星云 + 银河带：叠加发光
+    g.globalCompositeOperation="lighter";
+    function neb(cx,cy,rr,cr,cg,cb,a){
+      var rg=g.createRadialGradient(cx,cy,0,cx,cy,rr);
+      rg.addColorStop(0,"rgba("+cr+","+cg+","+cb+","+a+")");
+      rg.addColorStop(1,"rgba("+cr+","+cg+","+cb+",0)");
+      g.fillStyle=rg;g.fillRect(cx-rr,cy-rr,rr*2,rr*2);
     }
+    neb(w*0.26,h*0.30,Math.max(w,h)*0.50,120,80,200,0.34);  // 紫
+    neb(w*0.82,h*0.66,Math.max(w,h)*0.55,40,110,200,0.30);  // 蓝
+    neb(w*0.60,h*0.18,Math.max(w,h)*0.38,200,80,150,0.26);  // 品红
+    neb(w*0.40,h*0.82,Math.max(w,h)*0.42,40,170,160,0.18);  // 青绿微光
+    g.save();g.translate(w*0.5,h*0.5);g.rotate(-0.42);
+    var bandH=h*0.44;
+    var band=g.createLinearGradient(0,-bandH/2,0,bandH/2);
+    band.addColorStop(0,"rgba(180,200,255,0)");
+    band.addColorStop(0.42,"rgba(205,218,255,0.22)");
+    band.addColorStop(0.50,"rgba(238,242,255,0.42)");
+    band.addColorStop(0.58,"rgba(205,218,255,0.22)");
+    band.addColorStop(1,"rgba(180,200,255,0)");
+    g.fillStyle=band;g.fillRect(-w,-bandH/2,w*2,bandH);
+    var ridge=g.createLinearGradient(0,-bandH/6,0,bandH/6);
+    ridge.addColorStop(0,"rgba(255,255,255,0)");
+    ridge.addColorStop(0.5,"rgba(255,250,235,0.20)");
+    ridge.addColorStop(1,"rgba(255,255,255,0)");
+    g.fillStyle=ridge;g.fillRect(-w,-bandH/6,w*2,bandH/3);
+    g.restore();
+    g.globalCompositeOperation="source-over";
+    // 星点：按相位做闪烁
+    var t=(performance.now()-galaxyT0)/1000;
+    for(var i=0;i<galaxyStars.length;i++){
+      var s=galaxyStars[i];
+      var tw=0.45+0.55*Math.sin(t*s.sp+s.ph);   // 0~1
+      var a=s.a*(0.35+0.65*tw);
+      if(a<0.02)continue;
+      var rr=s.r*(0.8+0.35*tw);
+      var style="rgba("+s.col[0]+","+s.col[1]+","+s.col[2]+","+a.toFixed(3)+")";
+      if(s.glow){
+        g.save();g.shadowColor=style;g.shadowBlur=rr*3.2;
+        g.fillStyle=style;g.beginPath();g.arc(s.x,s.y,rr,0,Math.PI*2);g.fill();g.restore();
+      }else{
+        g.fillStyle=style;g.beginPath();g.arc(s.x,s.y,rr,0,Math.PI*2);g.fill();
+      }
+    }
+    galaxyRAF=requestAnimationFrame(drawGalaxy);
+  }
+  function startGalaxy(){
+    if($("#view-globe").classList.contains("active")&&!galaxyRAF){ galaxyT0=performance.now(); drawGalaxy(); }
   }
   function openGlobe(focusId){
     showView("globe");
-    var places=data.filter(function(d){return d.lat!=null&&d.lng!=null;});
+    var places=allPlaces();
     document.getElementById("globeCount").textContent=places.length;
-    if(focusId){var f=byId(focusId);if(f&&f.lng!=null){GLOBE.spin=((f.lng%360)+360)%360;GLOBE.tilt=Math.max(-70,Math.min(70,-(f.lat||0)));}}
-    if(document.getElementById("view-globe").classList.contains("active")){ requestAnimationFrame(drawGalaxy); }
+    if(focusId){var f=byAll(focusId);if(f&&f.lng!=null){GLOBE.spin=((f.lng%360)+360)%360;GLOBE.tilt=Math.max(-70,Math.min(70,-(f.lat||0)));}}
+    if(document.getElementById("view-globe").classList.contains("active")){ startGalaxy(); }
     ensureTextures(function(){ renderGlobe(); });
     var list=document.getElementById("placesList");list.innerHTML="";
-    if(places.length===0){list.innerHTML='<div class="empty">还没有足迹，去日历里记录一个去过的地方吧</div>';return;}
+    if(places.length===0){list.innerHTML='<div class="empty">还没有足迹，点右下角 ➕ 添加一条足迹吧</div>';return;}
     places.forEach(function(p){
-      var it=document.createElement("div");it.className="place-item";
-      it.innerHTML='<div class="place-pin"></div><div class="place-main"><div class="place-name">'+(p.place||p.title)+'</div><div class="place-sub">'+p.date+' · '+(p.title||"")+'</div></div>';
-      it.addEventListener("click",function(){openDetail(p.id);});
+      var it=document.createElement("div");it.className="place-item"+(p.kind==="fp"?" fp":"");
+      it.innerHTML='<div class="place-pin"></div><div class="place-main"><div class="place-name">'+esc(p.name)+'</div><div class="place-sub">'+p.date+' · '+esc(p.title||"")+'</div></div>';
+      it.addEventListener("click",function(){ if(p.kind==="fp"){var fpp=footprints.filter(function(x){return x.id===p.id;})[0];if(fpp)openFootprintDetail(fpp);}else{openDetail(p.id);} });
       list.appendChild(it);
     });
   }
 
   function switchTab(tab){
+    $("#shareBanner").style.display="none";
     document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("on");});
     document.querySelector('.tab[data-tab="'+tab+'"]').classList.add("on");
     if(tab==="calendar"){renderCalendar();showView("calendar");}
@@ -1024,6 +1342,7 @@
   $("#fab").addEventListener("click",function(){
     openSheet([
       {t:"记录一条成就",fn:function(){openAdd(state.selDate||"");}},
+      {t:"添加一个足迹",fn:function(){openFootprint();}},
       {t:"设立一个目标",fn:function(){openGoalForm(state.selDate||"");},hot:true}
     ]);
   });
@@ -1034,23 +1353,48 @@
   $("#listClear").addEventListener("click",function(){$("#listInput").value="";$("#listClear").classList.remove("show");renderList("");});
   $("#imgPick").addEventListener("click",function(){$("#f-img").click();});
   $("#f-img").addEventListener("change",function(e){
-    var f=e.target.files[0];if(!f)return;var r=new FileReader();
+    var f=e.target.files[0];if(!f)return;
+    if(f.size>4*1024*1024)toast("文件较大，本地存储仅约 5MB，可能无法保存");
+    var r=new FileReader();
     r.onload=function(ev){state.curImg=ev.target.result;renderImgPick();};r.readAsDataURL(f);
   });
   $("#saveBtn").addEventListener("click",function(){
-    var title=$("#f-title").value.trim();var date=$("#f-date").value;var desc=$("#f-desc").value.trim();var place=$("#f-place").value.trim();
+    var title=$("#f-title").value.trim();var date=$("#f-date").value;var desc=$("#f-desc").value.trim();
     if(!title){toast("请填写标题");return;}
     if(!date){toast("请选择日期");return;}
     if(state.editingId){
-      var a=byId(state.editingId);a.title=title;a.date=date;a.cat=state.curCat;a.desc=desc;a.img=state.curImg;a.place=place;a.lat=state.curLat;a.lng=state.curLng;toast("已更新");
+      var a=byId(state.editingId);a.title=title;a.date=date;a.cat=state.curCat;a.desc=desc;a.img=state.curImg;a.lat=state.curLat;a.lng=state.curLng;toast("已更新");
     }else{
-      data.push({id:Date.now(),title:title,date:date,cat:state.curCat,level:"",desc:desc,img:state.curImg,place:place,lat:state.curLat,lng:state.curLng});toast("已保存");
+      data.push({id:Date.now(),title:title,date:date,cat:state.curCat,level:"",desc:desc,img:state.curImg,lat:state.curLat,lng:state.curLng});toast("已保存");
     }
     save();switchTab("calendar");
   });
   $("#delBtn").addEventListener("click",function(){
     if(!state.editingId)return;
     data=data.filter(function(d){return d.id!==state.editingId;});save();toast("已删除");switchTab("calendar");
+  });
+  $("#fpImgPick").addEventListener("click",function(){$("#fpImg").click();});
+  $("#fpImg").addEventListener("change",function(e){
+    var f=e.target.files[0];if(!f)return;
+    if(f.size>4*1024*1024)toast("文件较大，本地存储仅约 5MB，可能无法保存");
+    var r=new FileReader();
+    r.onload=function(ev){state.fpImg=ev.target.result;renderFpImg();};r.readAsDataURL(f);
+  });
+  $("#fpSaveBtn").addEventListener("click",function(){
+    var title=$("#fp-title").value.trim();var date=$("#fp-date").value;var place=$("#fp-place").value.trim();var text=$("#fp-text").value.trim();
+    if(!title){toast("请填写标题");return;}
+    if(!date){toast("请选择日期");return;}
+    if(state.fpEditingId){
+      var fp=footprints.filter(function(x){return x.id===state.fpEditingId;})[0];
+      if(fp){fp.title=title;fp.date=date;fp.place=place;fp.text=text;fp.img=state.fpImg;fp.lat=state.fpLat;fp.lng=state.fpLng;toast("已更新");}
+    }else{
+      footprints.push({id:Date.now(),title:title,date:date,place:place,text:text,img:state.fpImg,lat:state.fpLat,lng:state.fpLng});toast("已保存");
+    }
+    saveFootprints();switchTab("globe");
+  });
+  $("#fpDelBtn").addEventListener("click",function(){
+    if(!state.fpEditingId)return;
+    footprints=footprints.filter(function(x){return x.id!==state.fpEditingId;});saveFootprints();toast("已删除");switchTab("globe");
   });
   $("#gSaveBtn").addEventListener("click",function(){
     var title=$("#g-title").value.trim();var date=$("#g-date").value;
@@ -1075,11 +1419,32 @@
   });
   document.querySelectorAll(".tab").forEach(function(t){t.addEventListener("click",function(){switchTab(t.dataset.tab);});});
 
-  // 地点词典 + 输入联动
+  // 我的：头像 / 姓名 / 学校 / 专业 编辑
+  function renderAvatar(){$("#pAvatar").innerHTML=profile.avatar?'<img src="'+profile.avatar+'">':(profile.name?profile.name.charAt(0):"我");}
+  $("#pAvatar").addEventListener("click",function(){$("#pAvatarInput").click();});
+  $("#pAvatarInput").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){profile.avatar=ev.target.result;saveProfile();renderAvatar();};r.readAsDataURL(f);});
+  [["pName","name"],["pSchool","university"],["pMajor","major"]].forEach(function(pair){
+    var el=$("#"+pair[0]);el.setAttribute("contenteditable","true");
+    el.addEventListener("blur",function(){profile[pair[1]]=el.textContent.trim();saveProfile();if(pair[0]==="pName")renderAvatar();});
+  });
+
+  // 简历：编辑滑块 + 证件照 + 重置
   (function(){
-    var dl=$("#placeList");if(dl){Object.keys(PLACE).forEach(function(k){var o=document.createElement("option");o.value=k;dl.appendChild(o);});}
-    var pin=$("#f-place");
-    if(pin)pin.addEventListener("input",function(){var n=this.value.trim();if(PLACE[n]){state.curLat=PLACE[n][0];state.curLng=PLACE[n][1];}else{state.curLat=null;state.curLng=null;}});
+    var sl=$("#editSlider"),drag=null,startX=0;
+    function applyMode(on){setEditModeUI(on);if(!on)lockResume();}
+    function fromX(x){var r=sl.getBoundingClientRect();applyMode((x-r.left)<r.width/2);}
+    sl.addEventListener("pointerdown",function(e){drag=true;startX=e.clientX;fromX(e.clientX);});
+    window.addEventListener("pointermove",function(e){if(drag)fromX(e.clientX);});
+    window.addEventListener("pointerup",function(e){if(!drag)return;if(Math.abs(e.clientX-startX)<6){var cur=sl.classList.contains("on");applyMode(!cur);}drag=null;});
+  })();
+  $("#resPhotoInput").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var slot=$("#resPhotoSlot");if(slot)slot.innerHTML='<img src="'+ev.target.result+'">';};r.readAsDataURL(f);});
+  $("#resReset").addEventListener("click",function(){resumeOverride=null;try{localStorage.removeItem(RSTORE);}catch(e){}openResume();toast("已重置为自动生成");});
+
+  // 地点词典 + 足迹输入联动
+  (function(){
+    var dl=$("#fpPlaceList");if(dl){Object.keys(PLACE).forEach(function(k){var o=document.createElement("option");o.value=k;dl.appendChild(o);});}
+    var pin=$("#fp-place");
+    if(pin)pin.addEventListener("input",function(){var n=this.value.trim();if(PLACE[n]){state.fpLat=PLACE[n][0];state.fpLng=PLACE[n][1];}else{state.fpLat=null;state.fpLng=null;}});
   })();
   // 地球：拖动旋转 + 双指/滚轮缩放 + 点击标记
   var gPointers={}, gDrag=null, gPinch=0, gDown=null;
@@ -1108,7 +1473,7 @@
     if(Object.keys(gPointers).length<2)gPinch=0;
     if(Object.keys(gPointers).length===0){
       if(gDown){var mv=Math.hypot(e.clientX-gDown.x,e.clientY-gDown.y),dt=Date.now()-gDown.t;
-        if(mv<8&&dt<400&&gDown.target&&gDown.target.closest){var mk=gDown.target.closest(".globe-marker");if(mk&&mk.dataset.id)openDetail(parseInt(mk.dataset.id,10));}}
+        if(mv<8&&dt<400&&gDown.target&&gDown.target.closest){var mk=gDown.target.closest(".globe-marker");if(mk&&mk.dataset.id){var mid=parseInt(mk.dataset.id,10);if(mk.dataset.kind==="fp"){var fpp=footprints.filter(function(x){return x.id===mid;})[0];if(fpp)openFootprintDetail(fpp);}else{openDetail(mid);}}}}
       gDown=null;gDrag=null;GLOBE.interacting=false;renderGlobe();
     }
   }
@@ -1122,14 +1487,14 @@
   var zIn=$("#zoomIn"), zOut=$("#zoomOut");
   if(zIn)zIn.addEventListener("click",function(){GLOBE.zoom=clampZoom(GLOBE.zoom*1.3);renderGlobe();});
   if(zOut)zOut.addEventListener("click",function(){GLOBE.zoom=clampZoom(GLOBE.zoom/1.3);renderGlobe();});
-  window.addEventListener("resize",function(){if($("#view-globe").classList.contains("active"))drawGalaxy();});
+  window.addEventListener("resize",function(){if($("#view-globe").classList.contains("active")){galaxyW=0;galaxyH=0;if(!galaxyRAF)drawGalaxy();}});
 
   function tick(){var d=new Date();$("#clock").textContent=d.getHours()+":"+("0"+d.getMinutes()).slice(-2);}
   tick();setInterval(tick,30000);
 
   var latest=data.map(function(d){return d.date;}).sort().pop();
   if(latest){state.year=parseInt(latest.slice(0,4),10);state.month=parseInt(latest.slice(5,7),10)-1;}
-  renderCalendar();
+  if(!applySharedResume()){renderCalendar();}
   checkDueGoals();
 })();
 </script>
